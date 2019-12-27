@@ -1,5 +1,6 @@
 
 import { useStaticQuery, graphql } from 'gatsby'
+import './hero-page.css'
 
 formatInfo(heroInfo)
 {
