@@ -31,16 +31,38 @@ class IndexPage extends React.Component {
   }
 
   async getRandomSuperhero() {
-    let id = Math.floor(Math.random() * ID_MAX);
-    let bioUrl = "api/" + SUP_TOKEN + "/" + id + "/biography";
-    // let picUrl =
-    //   "https://superheroapi.com/api/" + SUP_TOKEN + "/" + id + "/image";
-    const response = await axios
+    const id = Math.floor(Math.random() * ID_MAX);
+    const bioUrl = "api/" + SUP_TOKEN + "/" + id + "/biography";
+    const picUrl = "api/" + SUP_TOKEN + "/" + id + "/image";
+
+    const bioRequest = axios
       .get(bioUrl)
       .catch(error => this.setState({ error }));
-    if (response && response.status === 200) {
-      this.setState({ stats: response.data });
+    const picRequest = axios
+      .get(picUrl)
+      .catch(error => this.setState({ error }));
+
+    const response = await Promise.all([bioRequest, picRequest]);
+    if (
+      response[0] &&
+      response[0].status === 200 &&
+      response[1] &&
+      response[1].status === 200
+    ) {
+      this.setState({
+        heroInfo: response[0].data,
+        heroImgSrc: response[1].data.url
+      });
     }
+
+    // await axios
+    //   .get(bioUrl)
+    //   .catch(error => this.setState({ error }));
+    // if (response && response.status === 200) {
+    //   this.setState({ stats: response.data });
+    // }
+
+
     // const picResponse = await fetch(picUrl, {
     //   method: "GET",
     //   mode: "no-cors"
@@ -86,10 +108,9 @@ class IndexPage extends React.Component {
   }
 
   render() {
-    const { data, error, pic, stats } = this.state;
+    const { data, error, heroInfo, heroImgSrc } = this.state;
     const title = get(data, "allDataJson.edges[0].node.home.title", "Title");
-    const name = get(stats, "name");
-    console.log("data", this.state.data);
+    const name = get(heroInfo, "name");
 
     return (
       <Layout>
@@ -97,12 +118,12 @@ class IndexPage extends React.Component {
         <h1>{title}</h1>
 
         {error && <h1>{JSON.stringify(error)}</h1>}
-        <pre>{JSON.stringify(this.state, null, 4)}</pre>
+        {/* <pre>{JSON.stringify(this.state, null, 4)}</pre> */}
         <div id="heroInfo">
           <h2 id="heroName">{name}</h2>
           <div style={{ display: "flex", flexDirection: "row" }}>
             <div style={{ maxWidth: `200px` }}>
-              <img src={pic} style={{ marginBottom: 0 }} alt="hero" />
+              <img src={heroImgSrc} style={{ marginBottom: 0 }} alt="hero" />
             </div>
             <div
               style={{
