@@ -1,13 +1,15 @@
-import { Link } from "gatsby"
-import PropTypes from "prop-types"
-import React from "react"
-import styled from 'styled-components'
+import { Link } from "gatsby";
+import PropTypes from "prop-types";
+import React from "react";
+import styled from "styled-components";
 
 const ListLink = props => (
   <li style={{ display: `inline-block`, marginRight: `1rem` }}>
-    <StyledLink to={props.to} activeStyle={props.activeStyle}>{props.children}</StyledLink>
+    <StyledLink to={props.to} activeStyle={props.activeStyle}>
+      {props.children}
+    </StyledLink>
   </li>
-)
+);
 
 const StyledLink = styled(Link)`
   color: white;
@@ -19,7 +21,7 @@ const Header = ({ siteTitle }) => (
   <header
     style={{
       background: `#208dcd`,
-      marginBottom: `1.45rem`,
+      marginBottom: `1.45rem`
     }}
   >
     <div
@@ -35,28 +37,32 @@ const Header = ({ siteTitle }) => (
           to="/"
           style={{
             color: `white`,
-            textDecoration: `none`,
+            textDecoration: `none`
           }}
         >
           {siteTitle}
         </Link>
       </h2>
-      <div style={{ maxHeight: 30, alignSelf: 'flex-end' }}>
+      <div style={{ maxHeight: 30, alignSelf: "flex-end" }}>
         <ul style={{ listStyle: `none`, float: `right` }}>
-          <ListLink to="/" activeStyle={{ color: '#9bcdeb' }}>Home</ListLink>
-          <ListLink to="/page-2/" activeStyle={{ color: '#9bcdeb' }}>Page 2</ListLink>
+          <ListLink to="/" activeStyle={{ color: "#9bcdeb" }}>
+            Superheros
+          </ListLink>
+          <ListLink to="/space/" activeStyle={{ color: "#9bcdeb" }}>
+            Space
+          </ListLink>
         </ul>
       </div>
     </div>
   </header>
-)
+);
 
 Header.propTypes = {
-  siteTitle: PropTypes.string,
-}
+  siteTitle: PropTypes.string
+};
 
 Header.defaultProps = {
-  siteTitle: ``,
-}
+  siteTitle: ``
+};
 
-export default Header
+export default Header;

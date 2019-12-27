@@ -54,36 +54,6 @@ class IndexPage extends React.Component {
         heroImgSrc: response[1].data.url
       });
     }
-
-    // await axios
-    //   .get(bioUrl)
-    //   .catch(error => this.setState({ error }));
-    // if (response && response.status === 200) {
-    //   this.setState({ stats: response.data });
-    // }
-
-
-    // const picResponse = await fetch(picUrl, {
-    //   method: "GET",
-    //   mode: "no-cors"
-    // });
-    // try {
-    //   const bioResponse = await fetch(bioUrl, {
-    //     method: "GET",
-    //     mode: "no-cors"
-    //   });
-    //   // const picResponse = await fetch(picUrl, {
-    //   //   method: "GET",
-    //   //   mode: "no-cors"
-    //   // });
-    //   const stats = await bioResponse.json();
-    //   // const pic = await picResponse.json();
-    //   debugger;
-    //   this.setState({ stats });
-    // } catch (err) {
-    //   // debugger;
-    //   this.setState({ error: err });
-    // }
   }
 
   formatInfo() {
@@ -95,11 +65,18 @@ class IndexPage extends React.Component {
         entry[0] !== "aliases"
     );
     formatted = formatted.map(entry => {
+      let caption =
+        entry[0].slice(0, 1).toUpperCase() + entry[0].slice(1) + ":";
+      // caption = caption.replace(new RegExp('-'), ' ')
+      caption = caption.split("-").join(" ");
       return (
-        <span key={entry[0]} style={{ display: "flex", flexDirection: "row" }}>
-          <p>{entry[0].slice(0, 1).toUpperCase() + entry[0].slice(1) + ":"}</p>
+        <span
+          key={entry[0]}
+          style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}
+        >
+          <p>{caption}</p>
           <p style={{ marginLeft: 6 }}>
-            {entry[1] !== "null" ? entry[1] : "unknown"}
+            {entry[1] !== "-" ? entry[1] : "unknown"}
           </p>
         </span>
       );

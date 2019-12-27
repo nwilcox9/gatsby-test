@@ -10,16 +10,16 @@ const SecondPage = ({ data }) => {
   return (
     <Layout>
       <SEO title={data.allDataJson.edges[0].node.page_2.title} />
-      <br />
       <h1>{data.allDataJson.edges[0].node.page_2.title}</h1>
       <p>{data.allDataJson.edges[0].node.page_2.subtitle}</p>
 
-      <br />
-      {/* <Image src={data.file.childImageSharp.fluid} /> */}
-
-      <br />
-      <div>
-        <Link to="/">Go back to the homepage</Link>
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        <div style={{ width: "60%" }}>
+          <img src={data.nasa.url} alt="picture of galaxy" />
+        </div>
+        <p style={{ width: "40%", marginLeft: 30 }}>
+          {data.nasa.description + " (NASA ID:  " + data.nasa.id + ")"}{" "}
+        </p>
       </div>
     </Layout>
   );
@@ -39,15 +39,9 @@ export const query = graphql`
         }
       }
     }
-    file(relativePath: { eq: "universe.jpg" }) {
-      childImageSharp {
-        fluid(maxWidth: 600) {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    }
     nasa {
       id
+      description
       url
     }
   }
